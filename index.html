@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #output { margin-top: 20px; }
+        button { margin: 5px; }
+    </style>
+</head>
+<body>
+
+<h1>Monitor API Test</h1>
+
+<h2>Get Monitors</h2>
+<button onclick="getMonitors()">Fetch Monitors</button>
+
+<h2>Get Monitor Stat</h2>
+<input type="text" id="monitorId" placeholder="Enter Monitor ID">
+<button onclick="getMonitorStat()">Get Stat</button>
+
+<h2>Add Click for Monitor</h2>
+<input type="text" id="clickMonitorId" placeholder="Enter Monitor ID">
+<button onclick="addClick()">Add Click</button>
+
+<div id="output"></div>
+
+<script>
+    async function getMonitors() {
+    const response = await fetch('/category/monitors');
+    const data = await response.json();
+    document.getElementById('output').innerText = JSON.stringify(data, null, 2);
+}
+
+
+
+    async function getMonitorStat() {
+        const monitorId = document.getElementById('monitorId').value;
+        const response = await fetch(`/category/monitor/${monitorId}`);
+        const data = await response.json();
+        document.getElementById('output').innerText = JSON.stringify(data, null, 2);
+    }
+
+    async function addClick() {
+        const monitorId = document.getElementById('clickMonitorId').value;
+        const response = await fetch(`/category/monitor_click/${monitorId}`, { method: 'POST' });
+        if (response.ok) {
+            document.getElementById('output').innerText = `Click added for Monitor ID: ${monitorId}`;
+        } else {
+            document.getElementById('output').innerText = `Failed to add click for Monitor ID: ${monitorId}`;
+        }
+    }
+</script>
+
+</body>
+</html>
+
