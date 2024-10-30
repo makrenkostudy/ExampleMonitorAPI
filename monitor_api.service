@@ -1,0 +1,14 @@
+[Unit]
+Description=Monitor API Service
+Requires=network.target
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/opt/monitor_api/start_monitor_api.sh start
+ExecStop=/opt/monitor_api/start_monitor_api.sh stop
+RemainAfterExit=True
+User=stud
+
+[Install]
+WantedBy=multi-user.target
